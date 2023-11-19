@@ -15,6 +15,7 @@ label {
     display: block;
     font-size: 1.1em;
     font-weight: 700;
+    margin-top: 1em;
 }
 
 label span {
@@ -41,7 +42,7 @@ button {
     color: #ffffff;
     border: none;
     cursor: pointer;
-    margin-top: 5em;
+    margin-top: 2.5em;
 }
 
 form p {
@@ -68,4 +69,14 @@ form p svg {
 .hide,
 .offscreen {
     display: none;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: unset;
+}
+
+.signIn {
+    display: block;
+    color: #000000;
 }
