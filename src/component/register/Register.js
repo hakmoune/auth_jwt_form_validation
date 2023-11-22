@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Register.css"
+import "./Register.css";
+import axios from "../../api/axios";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
+const REGISTER_URL = '/auth/login';
 
 const Register = () => {
     const userRef = useRef();
@@ -47,6 +49,7 @@ const Register = () => {
         setMsgErr('')
     }, [user, pwd, matchPwd]);
 
+    /** CALL API */
     const handleSubmit = async (e) => {
         e.preventDefault();
         //if button enabled with JS hack
@@ -57,8 +60,35 @@ const Register = () => {
             return;
         }
 
-        console.log(user, pwd)
-        setSuccess(true);
+        try {
+            const response = await axios.post(REGISTER_URL,
+                //Axios automatically serializes the JavaScript object into JSON format, 
+                //And sets the Content-Type header to application/json
+                { username: user, password: pwd }
+
+                /*JSON.stringify({ username: user, password: pwd }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }*/
+            );
+
+            if (response.status === 200) {
+                console.log(response.data);
+                setSuccess(true);
+            }
+
+        } catch (err) {
+            if (!err?.response) {
+                setMsgErr('No Server Response...')
+            }
+            //else if selon les status code renvoyer par le back 409 = username taken 407.... etc
+            else {
+                setMsgErr('Registration Failed')
+                console.error(`Failed to Connect. Status: ${err}`);
+            }
+            errRef.current.focus(); // Don't know why they use it 
+        }
     }
 
     return (
@@ -76,7 +106,7 @@ const Register = () => {
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">
-                            Username:
+                            Username: <small>(atuny0)</small>
                             <span className={validName ? "valid" : "hide"}>
                                 <FontAwesomeIcon icon={faCheck} />
                             </span>
@@ -104,7 +134,7 @@ const Register = () => {
                         </p>
 
                         <label htmlFor="password">
-                            Password:
+                            Password: <small>(9uQFF1Lh)</small>
                             <span className={validPwd ? "valid" : "hide"}>
                                 <FontAwesomeIcon icon={faCheck} />
                             </span>
