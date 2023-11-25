@@ -87,7 +87,7 @@ const Register = () => {
                 setMsgErr('Registration Failed')
                 console.error(`Failed to Connect. Status: ${err}`);
             }
-            errRef.current.focus(); // Don't know why they use it 
+            errRef.current.focus(); // Set the focus on the error for the screen reader
         }
     }
 
@@ -197,6 +197,7 @@ const Register = () => {
 
                     <p>
                         Already registered?
+                        {/* This will be a react Router link */}
                         <a href="#" className="signIn">Sign in</a>
                     </p>
                 </div>

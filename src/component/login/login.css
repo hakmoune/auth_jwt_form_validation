@@ -1,0 +1,82 @@
+section {
+    width: 60%;
+    height: auto;
+    margin: 2em auto;
+    padding: .5em 2em 2em 2em;
+    background: #eeeeee;
+    border-radius: .5em;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+label {
+    display: block;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+label span {
+    margin-left: .5em;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5em;
+    border-radius: .5em;
+    margin-top: .5em;
+    border: 1px solid #808080
+}
+
+button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: .5em;
+    border-radius: .5em;
+    font-size: 1.2em;
+    font-weight: 700;
+    background: #007af3;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    margin-top: 2.5em;
+}
+
+form p {
+    padding: 1em;
+    background: #000000;
+    color: #ffffff;
+    margin-top: .3em;
+    border-radius: .5em;
+    border: none;
+}
+
+form p svg {
+    margin-right: .3em;
+}
+
+.valid {
+    color: green;
+}
+
+.invalid {
+    color: red;
+}
+
+.hide,
+.offscreen {
+    display: none;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: unset;
+}
+
+.signIn {
+    display: block;
+    color: #000000;
+}
