@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 import "./login.css";
 import axios from "../../api/axios";
-
 
 const REGISTER_URL = '/auth/login';
 
 const Login = () => {
+    const { setAuth } = useContext(AuthContext)
     const usernameRef = useRef(); // to set focus on the username input
 
     const [username, setUsername] = useState('');
@@ -30,13 +29,19 @@ const Login = () => {
             const response = await axios.post(REGISTER_URL,
                 { username: username, password: pwdtext }
             );
-            if (response.status === 200) {
-                /* Redirection */
-                console.log(response.data);
-                setSuccesstext(true);
-            }
+
+            const accessToken = response?.data.token
+            const roles = 'admin' /* Renvoyer par le back, pour limiter ou donner l'access a certain route */
+            setAuth({ username, pwdtext, roles, accessToken })
+
+            setUsername('')
+            setPwdtext('')
+            setSuccesstext(true);
+            console.log(response.data);
+
         } catch (error) {
             console.error("Faild to connect", error.message);
+            setErrMsgtext("Faild to connect")
         }
     }
 

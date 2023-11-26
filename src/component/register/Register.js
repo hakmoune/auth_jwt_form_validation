@@ -72,7 +72,7 @@ const Register = () => {
                     withCredentials: true
                 }*/
             );
-
+            /** Avec Axiox pas besoin de verifier le status si c'est OK ou no, automatiquement axios declench une erreur si il y en a */
             if (response.status === 200) {
                 console.log(response.data);
                 setSuccess(true);

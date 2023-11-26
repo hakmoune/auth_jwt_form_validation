@@ -80,3 +80,11 @@ form p svg {
     display: block;
     color: #000000;
 }
+
+.errmsg {
+    padding: 1em .5em;
+    background: #FFCdd2;
+    color: red;
+    font-weight: 700;
+    border-radius: .3em;
+}
