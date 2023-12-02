@@ -11,8 +11,8 @@ const AuthContext = createContext({}); // Create the Context API
 export const AuthPerovider = ({ children }) => {
     const [auth, setAuth] = useState({}); // State qui va etre partager dans l'ensemble de notre appli
 
-    // Pour englober l'ensemble de notre application et rendre l'état accessible dans toute l'application
-    // Chidren = C'est Notre Application nos composants
+    // Pour englober l'ensemble de notre application et rendre the state accessible dans toute l'application
+    // Children = C'est Notre Application nos composants
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
             {children}

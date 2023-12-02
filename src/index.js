@@ -4,13 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthPerovider } from './context/AuthProvider';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthPerovider>
-      <App />
-    </AuthPerovider>
+    <BrowserRouter>{/** For use in web browsers. */}
+      <AuthPerovider>
+        <Routes>{/** Container for a nested tree of <Route> */}
+          <Route path='/*' element={<App />} /> {/* the path='/*' means that it will be other routes inside this compenet App */}
+        </Routes>
+      </AuthPerovider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

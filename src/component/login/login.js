@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
+import React, { useEffect, useState, useRef } from "react";
+import useAuth from "../hooks/useAuth";
 import "./login.css";
 import axios from "../../api/axios";
+import { Link } from "react-router-dom";
 
 const REGISTER_URL = '/auth/login';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext)
+    const { setAuth } = useAuth();
     const usernameRef = useRef(); // to set focus on the username input
 
     const [username, setUsername] = useState('');
@@ -32,13 +33,11 @@ const Login = () => {
 
             const accessToken = response?.data.token
             const roles = 'admin' /* Renvoyer par le back, pour limiter ou donner l'access a certain route */
-            setAuth({ username, pwdtext, roles, accessToken })
+            setAuth({ username, pwdtext, roles, accessToken });
 
             setUsername('')
             setPwdtext('')
             setSuccesstext(true);
-            console.log(response.data);
-
         } catch (error) {
             console.error("Faild to connect", error.message);
             setErrMsgtext("Faild to connect")
@@ -50,7 +49,7 @@ const Login = () => {
             {successtext ? (
                 <div>
                     <h1>You are logged in!</h1>
-                    <p><a href="#">Go to home !</a></p>
+                    <p><Link to="/contact" >Go to contact !</Link></p>
                 </div>
             ) : (
                 <div>
