@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './component/Layout';
 import Contact from './component/contact/Contact';
 import NotFound from './component/404/NotFound';
+import Unauthorized from './component/Unauthorized/Unauthorized';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<Home />} /> {/** Index: defaul page or home page */}
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
+          <Route path='unauthorized' element={<Unauthorized />} />
         </Route>
 
         <Route element={<RequireAuth />}>

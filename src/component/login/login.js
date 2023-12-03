@@ -2,18 +2,24 @@ import React, { useEffect, useState, useRef } from "react";
 import useAuth from "../hooks/useAuth";
 import "./login.css";
 import axios from "../../api/axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const REGISTER_URL = '/auth/login';
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { auth, setAuth } = useAuth();
     const usernameRef = useRef(); // to set focus on the username input
 
     const [username, setUsername] = useState('');
     const [pwdtext, setPwdtext] = useState('');
     const [errMsgtext, setErrMsgtext] = useState('');
     const [successtext, setSuccesstext] = useState(false); // To show or not a suceess Msg
+
+    // Get the path of the protected route that the user tried to access without connecting, 
+    // So when he connect we will redirect him to this page
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         usernameRef.current.focus();
@@ -35,9 +41,14 @@ const Login = () => {
             const roles = 'admin' /* Renvoyer par le back, pour limiter ou donner l'access a certain route */
             setAuth({ username, pwdtext, roles, accessToken });
 
+            console.log("console", auth.roles)
             setUsername('')
             setPwdtext('')
             setSuccesstext(true);
+
+            // Replace means that the login path history will be replaced with contact, 
+            // so user can't retunr back to the login page after connecting
+            navigate(from, { replace: true });
         } catch (error) {
             console.error("Faild to connect", error.message);
             setErrMsgtext("Faild to connect")
