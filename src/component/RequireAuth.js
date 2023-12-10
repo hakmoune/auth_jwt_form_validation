@@ -2,7 +2,7 @@ import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 
 const RequireAuth = () => {
-    const { auth } = useAuth();
+    const { auth } = useAuth();// Context
     const location = useLocation(); //E.g contact
 
     {/** The state={{ from: location }} part is passing the current location as state to the "/login" page.

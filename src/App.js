@@ -7,6 +7,7 @@ import Layout from './component/Layout';
 import Contact from './component/contact/Contact';
 import NotFound from './component/404/NotFound';
 import Unauthorized from './component/Unauthorized/Unauthorized';
+import Users from './component/users/Users';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
           <Route path='unauthorized' element={<Unauthorized />} />
+          <Route path='users' element={<Users />} />
         </Route>
 
         <Route element={<RequireAuth />}>

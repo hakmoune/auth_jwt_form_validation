@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import useAuth from "../hooks/useAuth";
 import "./login.css";
 import axios from "../../api/axios";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const REGISTER_URL = '/auth/login';
 
@@ -13,7 +13,6 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [pwdtext, setPwdtext] = useState('');
     const [errMsgtext, setErrMsgtext] = useState('');
-    const [successtext, setSuccesstext] = useState(false); // To show or not a suceess Msg
 
     // Get the path of the protected route that the user tried to access without connecting, 
     // So when he connect we will redirect him to this page
@@ -41,14 +40,15 @@ const Login = () => {
             const roles = 'admin' /* Renvoyer par le back, pour limiter ou donner l'access a certain route */
             setAuth({ username, pwdtext, roles, accessToken });
 
-            console.log("console", auth.roles)
+            console.log("console response", response.data)
+            console.log("console conetxt", auth)
+
             setUsername('')
             setPwdtext('')
-            setSuccesstext(true);
 
             // Replace means that the login path history will be replaced with contact, 
             // so user can't retunr back to the login page after connecting
-            navigate(from, { replace: true });
+            //navigate(from, { replace: true });
         } catch (error) {
             console.error("Faild to connect", error.message);
             setErrMsgtext("Faild to connect")
@@ -57,55 +57,48 @@ const Login = () => {
 
     return (
         <section>
-            {successtext ? (
-                <div>
-                    <h1>You are logged in!</h1>
-                    <p><Link to="/contact" >Go to contact !</Link></p>
-                </div>
-            ) : (
-                <div>
-                    <p className={errMsgtext ? "errmsg" : "offscreen"}>
-                        {errMsgtext}
-                    </p>
+            <div>
+                <p className={errMsgtext ? "errmsg" : "offscreen"}>
+                    {errMsgtext}
+                </p>
 
-                    <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="usernametext">
-                            Username: <small>(atuny0)</small>
-                        </label>
-                        <input
-                            type="text"
-                            id="usernametext"
-                            ref={usernameRef}
-                            autoComplete="off"
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                            value={username}
-                        />
+                <h1>Sign In</h1>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="usernametext">
+                        Username: <small>(atuny0)</small>
+                    </label>
+                    <input
+                        type="text"
+                        id="usernametext"
+                        ref={usernameRef}
+                        autoComplete="off"
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        value={username}
+                    />
 
-                        <label htmlFor="passwordtext">
-                            Password: <small>(9uQFF1Lh)</small>
-                        </label>
-                        <input
-                            type="password"
-                            id="passwordtext"
-                            onChange={(e) => setPwdtext(e.target.value)}
-                            value={pwdtext}
-                            required
-                        />
+                    <label htmlFor="passwordtext">
+                        Password: <small>(9uQFF1Lh)</small>
+                    </label>
+                    <input
+                        type="password"
+                        id="passwordtext"
+                        onChange={(e) => setPwdtext(e.target.value)}
+                        value={pwdtext}
+                        required
+                    />
 
-                        <button>
-                            Sing In
-                        </button>
-                    </form>
+                    <button>
+                        Sing In
+                    </button>
+                </form>
 
-                    <p>
-                        Need an account?
-                        {/* This will be a react Router link */}
-                        <a href="#" className="signIn">Sign Up</a>
-                    </p>
-                </div>
-            )}
+                <p>
+                    Need an account?
+                    {/* This will be a react Router link */}
+                    <a href="#" className="signIn">Sign Up</a>
+                </p>
+            </div>
         </section>
     )
 }
