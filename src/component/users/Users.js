@@ -11,6 +11,8 @@ const Users = () => {
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+        // new AbortController instance allows you to potentially cancel an ongoing HTTP request made with Axios. 
+        // This can be useful if, for some reason, you want to cancel the request (stop it) before it's completed.
 
         const getUsers = async () => {
             try {
@@ -29,7 +31,7 @@ const Users = () => {
 
         return () => {
             isMounted = false;
-            controller.abort();
+            controller.abort(); // cancell any pending request if the component is unmounted
         }
     }, [])
 
